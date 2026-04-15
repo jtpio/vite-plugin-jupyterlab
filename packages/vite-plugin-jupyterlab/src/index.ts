@@ -13,7 +13,7 @@ import {
   existsSync,
   renameSync,
 } from "node:fs";
-import { resolve, join, dirname } from "node:path";
+import { resolve, join, dirname, isAbsolute, relative } from "node:path";
 import { createRequire } from "node:module";
 
 export interface JupyterLabFederationOptions {
@@ -148,9 +148,11 @@ export function jupyterlabFederation(
   // Guard against dangerous outputDir values that could cause emptyDir
   // to delete the project root or files outside the project.
   const resolvedOutputDir = resolve(cwd, outputDir);
+  const relativeOutputDir = relative(cwd, resolvedOutputDir);
   if (
-    resolvedOutputDir === cwd ||
-    !resolvedOutputDir.startsWith(cwd + "/")
+    !relativeOutputDir ||
+    relativeOutputDir.startsWith("..") ||
+    isAbsolute(relativeOutputDir)
   ) {
     throw new Error(
       `vite-plugin-jupyterlab: "jupyterlab.outputDir" must be a subdirectory ` +

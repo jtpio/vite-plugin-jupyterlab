@@ -9,14 +9,28 @@ overrides:
 
 importers:
 
-  .:
+  .: {}
+
+  packages/create-jupyterlab-extension:
+    dependencies:
+      '@clack/prompts':
+        specifier: ^0.11.0
+        version: 0.11.0
+      kleur:
+        specifier: ^4.1.5
+        version: 4.1.5
+      vite-plugin-jupyterlab:
+        specifier: workspace:^
+        version: link:../vite-plugin-jupyterlab
+
+  packages/vite-plugin-jupyterlab:
     dependencies:
       '@jupyterlab/core-meta':
         specifier: 4.6.0-alpha.4
         version: 4.6.0-alpha.4
       vite:
         specifier: npm:@voidzero-dev/vite-plus-core@latest
-        version: '@voidzero-dev/vite-plus-core@0.1.16(@types/node@25.6.0)(typescript@6.0.2)'
+        version: '@voidzero-dev/vite-plus-core@0.1.18(@types/node@25.6.0)(typescript@6.0.2)'
     devDependencies:
       '@types/node':
         specifier: ^25.6.0
@@ -27,29 +41,35 @@ importers:
 
 packages:
 
+  '@clack/core@0.5.0':
+    resolution: {integrity: sha512-p3y0FIOwaYRUPRcMO7+dlmLh8PSRcrjuTndsiA0WAFbWES0mLZlrjVoBRZ9DzkPFJZG6KGkJmoEAY0ZcVWTkow==}
+
+  '@clack/prompts@0.11.0':
+    resolution: {integrity: sha512-pMN5FcrEw9hUkZA4f+zLlzivQSeQf5dRGJjSUbvVYDLvpKCdQx5OaknvKzgbtXOizhP+SJJJjqEbOe55uKKfAw==}
+
   '@jupyterlab/core-meta@4.6.0-alpha.4':
     resolution: {integrity: sha512-zZEvatACDlm/zjTNm/ys0dXVq15k/5LfSvV8k+pHmF3LqAeF8OcMZXId1qSDZLTEPX6hdVmR020LLkEf3FqLJQ==}
 
-  '@oxc-project/runtime@0.123.0':
-    resolution: {integrity: sha512-wRf0z8saz9tHLcK3YeTeBmwISrpy4bBimvKxUmryiIhbt+ZJb0nwwJNL3D8xpeWbNfZlGSlzRBZbfcbApIGZJw==}
+  '@oxc-project/runtime@0.124.0':
+    resolution: {integrity: sha512-sSg6n37J3w3mM4odFvRqzQENf6+qxKnvStr/gU0FgRRg1VE/4MqryLd9PJmE0a7K5xlDfbrctBtSagaFH6ij9Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
 
-  '@oxc-project/types@0.123.0':
-    resolution: {integrity: sha512-YtECP/y8Mj1lSHiUWGSRzy/C6teUKlS87dEfuVKT09LgQbUsBW1rNg+MiJ4buGu3yuADV60gbIvo9/HplA56Ew==}
+  '@oxc-project/types@0.124.0':
+    resolution: {integrity: sha512-VBFWMTBvHxS11Z5Lvlr3IWgrwhMTXV+Md+EQF0Xf60+wAdsGFTBx7X7K/hP4pi8N7dcm1RvcHwDxZ16Qx8keUg==}
 
   '@types/node@25.6.0':
     resolution: {integrity: sha512-+qIYRKdNYJwY3vRCZMdJbPLJAtGjQBudzZzdzwQYkEPQd+PJGixUL5QfvCLDaULoLv+RhT3LDkwEfKaAkgSmNQ==}
 
-  '@voidzero-dev/vite-plus-core@0.1.16':
-    resolution: {integrity: sha512-fOyf14CXjcXqANFs2fCXEX+0Tn9ZjmqfFV+qTnARwIF1Kzl8WquO4XtvlDgs/fTQ91H4AyoNUgkvWdKS+C4xYA==}
+  '@voidzero-dev/vite-plus-core@0.1.18':
+    resolution: {integrity: sha512-3PmXOL26yHzlw8ET9SwXCmglGzUYq2fOTYf2t0mxvVIs7ua3bnf6tOnmR+6YX5k1Ez26B0ooYzx+znc8k+CAMw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       '@arethetypeswrong/core': ^0.18.1
-      '@tsdown/css': 0.21.7
-      '@tsdown/exe': 0.21.7
+      '@tsdown/css': 0.21.8
+      '@tsdown/exe': 0.21.8
       '@types/node': ^20.19.0 || >=22.12.0
       '@vitejs/devtools': ^0.1.0
-      esbuild: ^0.28.0
+      esbuild: ^0.27.0 || ^0.28.0
       jiti: '>=1.21.0'
       less: ^4.0.0
       publint: ^0.3.0
@@ -108,6 +128,10 @@ packages:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+
+  kleur@4.1.5:
+    resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
+    engines: {node: '>=6'}
 
   lightningcss-android-arm64@1.32.0:
     resolution: {integrity: sha512-YK7/ClTt4kAK0vo6w3X+Pnm0D2cf2vPHbhOXdoNti1Ga0al1P4TBZhwjATvjNwLEBCnKvjJc2jQgHXH0NEwlAg==}
@@ -191,6 +215,9 @@ packages:
     resolution: {integrity: sha512-7a70Nsot+EMX9fFU3064K/kdHWZqGVY+BADLyXc8Dfv+mTLLVl6JzJpPaCZ2kQL9gIJvKXSLMHhqdRRjwQeFtw==}
     engines: {node: ^10 || ^12 || >=14}
 
+  sisteransi@1.0.5:
+    resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
+
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -205,20 +232,31 @@ packages:
 
 snapshots:
 
+  '@clack/core@0.5.0':
+    dependencies:
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
+
+  '@clack/prompts@0.11.0':
+    dependencies:
+      '@clack/core': 0.5.0
+      picocolors: 1.1.1
+      sisteransi: 1.0.5
+
   '@jupyterlab/core-meta@4.6.0-alpha.4': {}
 
-  '@oxc-project/runtime@0.123.0': {}
+  '@oxc-project/runtime@0.124.0': {}
 
-  '@oxc-project/types@0.123.0': {}
+  '@oxc-project/types@0.124.0': {}
 
   '@types/node@25.6.0':
     dependencies:
       undici-types: 7.19.2
 
-  '@voidzero-dev/vite-plus-core@0.1.16(@types/node@25.6.0)(typescript@6.0.2)':
+  '@voidzero-dev/vite-plus-core@0.1.18(@types/node@25.6.0)(typescript@6.0.2)':
     dependencies:
-      '@oxc-project/runtime': 0.123.0
-      '@oxc-project/types': 0.123.0
+      '@oxc-project/runtime': 0.124.0
+      '@oxc-project/types': 0.124.0
       lightningcss: 1.32.0
       postcss: 8.5.9
     optionalDependencies:
@@ -230,6 +268,8 @@ snapshots:
 
   fsevents@2.3.3:
     optional: true
+
+  kleur@4.1.5: {}
 
   lightningcss-android-arm64@1.32.0:
     optional: true
@@ -289,6 +329,8 @@ snapshots:
       nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  sisteransi@1.0.5: {}
 
   source-map-js@1.2.1: {}
 

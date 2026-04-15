@@ -1,39 +1,7 @@
 {
-  "name": "vite-plugin-jupyterlab",
-  "version": "0.1.1",
-  "description": "Vite plugin for building JupyterLab federated extensions",
-  "license": "BSD-3-Clause",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
-  },
-  "bin": {
-    "labext-dev": "./bin/labext-dev.mjs"
-  },
-  "files": [
-    "dist",
-    "bin"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
+  "private": true,
   "scripts": {
-    "build": "tsc",
-    "prepublishOnly": "pnpm build"
-  },
-  "dependencies": {
-    "@jupyterlab/core-meta": "4.6.0-alpha.4"
-  },
-  "peerDependencies": {
-    "vite": "*"
-  },
-  "devDependencies": {
-    "@types/node": "^25.6.0",
-    "typescript": "^6.0.0",
-    "vite": "npm:@voidzero-dev/vite-plus-core@latest"
+    "build": "pnpm -r run build"
   },
   "pnpm": {
     "overrides": {

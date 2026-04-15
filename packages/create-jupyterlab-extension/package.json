@@ -1,0 +1,26 @@
+{
+  "name": "create-jupyterlab-extension",
+  "version": "0.1.0",
+  "description": "Scaffold a JupyterLab extension powered by Vite",
+  "license": "BSD-3-Clause",
+  "type": "module",
+  "bin": {
+    "create-jupyterlab-extension": "index.js"
+  },
+  "files": [
+    "index.js",
+    "create.js",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "kleur": "^4.1.5",
+    "vite-plugin-jupyterlab": "workspace:^"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
