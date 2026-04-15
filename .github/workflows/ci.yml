@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm build
+
+  test-create-extension:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kind: [frontend, theme, mimerenderer, server]
+    env:
+      VIRTUAL_ENV: /tmp/test-venv
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Install monorepo dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Pack vite-plugin-jupyterlab
+        run: |
+          cd packages/vite-plugin-jupyterlab
+          pnpm pack --pack-destination "$GITHUB_WORKSPACE"
+
+      - name: Generate, build, and verify extension
+        run: node tests/test-create-extension.mjs ${{ matrix.kind }} "$GITHUB_WORKSPACE"/vite-plugin-jupyterlab-*.tgz
+
+      - name: Set up Python virtual environment
+        run: |
+          uv venv "$VIRTUAL_ENV"
+          echo "$VIRTUAL_ENV/bin" >> "$GITHUB_PATH"
+
+      - name: Install JupyterLab
+        run: uv pip install jupyterlab
+
+      - name: Install extension in development mode
+        working-directory: /tmp/jlab-test-${{ matrix.kind }}
+        run: uv pip install -e .
+
+      - name: Create labextension symlink
+        working-directory: /tmp/jlab-test-${{ matrix.kind }}
+        run: pnpm exec labext-dev
+
+      - name: Verify JupyterLab recognizes the extension
+        run: jupyter labextension list 2>&1 | tee /dev/stderr | grep -q "test-${{ matrix.kind }}-extension.*enabled.*OK"
+
+      - name: Verify server extension is recognized
+        if: matrix.kind == 'server'
+        run: jupyter server extension list 2>&1 | tee /dev/stderr | grep -q "test_${{ matrix.kind }}_extension"
+
+      - name: Build wheel
+        working-directory: /tmp/jlab-test-${{ matrix.kind }}
+        run: uv build --wheel --out-dir /tmp/test-wheel
