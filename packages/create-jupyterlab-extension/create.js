@@ -155,6 +155,7 @@ function packageJson(
       overrides: {
         vite: "npm:@voidzero-dev/vite-plus-core@latest",
       },
+      ignoredBuiltDependencies: ["@fortawesome/fontawesome-free"],
       peerDependencyRules: {
         allowAny: ["vite"],
       },
